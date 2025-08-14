@@ -1,3 +1,6 @@
+import { ProductListFilter } from "@/components/categories/product-list-filter";
+import Link from "next/link";
+
 type Props = {
     params: Promise<{slug: string}>;
     searchParams: Promise<{ [key: string]: string | string[] | undefined}>
@@ -11,8 +14,12 @@ export default async function Page({ params, searchParams }: Props){
 
 
     return (
-        <div>
-            ...
+        <div className="">
+            <div className="text-gray-500 mb-4">
+                <Link href={'/'}>Home</Link> &gt; Temporário
+            </div>
+
+           <ProductListFilter />
         </div>
     )
 }
