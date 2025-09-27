@@ -21,5 +21,10 @@ export const data = {
         price: 19.90,
         liked: false,
         description: 'Alguma descrição do produto'
-    }
+    },
+    addresses: [
+        {id: 1, zipcode: '123456', street: 'Rua teste 1', number: '123', city: 'Los Angeles', state: 'California', country: 'USA'},
+        {id: 2, zipcode: '444444', street: 'Rua teste 2', number: '444', city: 'Los Angeles', state: 'California', country: 'USA'},
+        {id: 3, zipcode: '555555', street: 'Rua teste 3', number: '555', city: 'Los Angeles', state: 'California', country: 'USA'},
+    ]
 }
