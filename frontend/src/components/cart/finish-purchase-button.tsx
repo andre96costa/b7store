@@ -41,7 +41,7 @@ export const FinishPurchaseButton = () => {
 
     return (
         <button disabled={!cartStore.selectedAddressId ? true : false } onClick={handleFinishButton} className="cursor-pointer w-full text-center px-6 py-5 bg-blue-600 text-white border-0 rounded-sm disabled:opacity-20">
-            ...
+            Finalizar Compra
         </button>
     );
 }
