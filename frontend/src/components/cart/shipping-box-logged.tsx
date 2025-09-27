@@ -6,11 +6,14 @@ import { Address } from '@/types/address';
 import { useAuthStore } from "@/store/auth";
 import { getUserAddresses } from "@/actions/get-user-addresses";
 import { getShippingInfo } from "@/actions/get-shipping-info";
+import { AddressModal } from "./address-modal";
+import { addUserAddress } from "@/actions/add-user-address";
 
 export const ShippingBoxLogged = () => {
     const { token, hydrated } = useAuthStore(state => state);
     const cartStore = useCartStore(state => state);
     const [addresses, setAdressess] = useState<Address[]>([]);
+    const [modalOpened, setModalOpened] = useState(false);
     const [peding, startTransition] = useTransition();
 
 
@@ -50,6 +53,17 @@ export const ShippingBoxLogged = () => {
         }
     }
 
+    const handleAddAddress = async (address:Address) => {
+        if (!token) {
+            return;
+        }
+        const newAddresses = await addUserAddress(token, address);
+        if (newAddresses) {
+            setAdressess(newAddresses);
+            setModalOpened(false);
+        }
+    }
+
     return (
         <div className="flex flex-col gap-4">
             <select onChange={handleSelectAddress} value={cartStore.selectedAddressId ?? ''} className="flex-1 px-6 py-5 bg-white border border-gray-200 rounded-sm">
@@ -58,9 +72,15 @@ export const ShippingBoxLogged = () => {
                     <option key={item.id} value={item.id}>{item.street}, {item.number} - {item.city} ({item.zipcode})</option>
                 ))}
             </select>
-            <button className="cursor-pointer px-6 py-5 bg-blue-600 text-white border-0 rounded-sm">
+            <button onClick={() => setModalOpened(true)} className="cursor-pointer border-0">
                 Adicionar novo endereço
             </button>
+
+            <AddressModal 
+                open={modalOpened} 
+                onClose={() => setModalOpened(false) }
+                onAdd={handleAddAddress} 
+            />
         </div>
     )
 }
