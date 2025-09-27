@@ -5,6 +5,8 @@ import { CartListItem } from "@/types/cart-list-item"
 import Image from "next/image";
 import { useEffect } from "react";
 import { CartProductList } from "./cart-product-list";
+import { FinishPurchaseButton } from "./finish-purchase-button";
+import Link from "next/link";
 
 type Props = {
     initialCartProducts: CartListItem[];
@@ -17,6 +19,8 @@ export const CartContainer = ({ initialCartProducts, initialSubtotal }: Props) =
     useEffect(() => {
         cartStore.clearShipping();
     }, []);
+
+    let total = initialSubtotal + cartStore.shippingCost;
 
     return (
         <div>
@@ -31,8 +35,45 @@ export const CartContainer = ({ initialCartProducts, initialSubtotal }: Props) =
                 <div className="flex-1">
                     <CartProductList initiaList={initialCartProducts} />
                 </div>
-                <div className="flex-1 md:max-w-sm">
-                    Info
+                <div className="flex-1 md:max-w-sm flex flex-col gap-4">
+                    <div className="bg-white border border-gray-200 rounded-sm">
+                        <div className="border-b border-gray-200 p-6">
+                            <div className="flex justify-between items-center mb-5">
+                                <div>
+                                    Subtotal
+                                </div>
+                                <div className="font-bold">
+                                    R$ {initialSubtotal.toFixed(2)}
+                                </div>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    Frete
+                                </div>
+                                <div className="font-bold">
+                                    R$ {cartStore.shippingCost.toFixed(2)}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="p-6">
+                            <div className="flex justify-between items-center mb-3">
+                                <div>
+                                    Total
+                                </div>
+                                <div className="font-bold text-2xl text-blue-600">
+                                    R$ {total.toFixed(2)}
+                                </div>
+                            </div>
+                            <div className="text-right text-xs text-gray-500 mb-5"> 
+                                Em até 12x no cartão
+                            </div>
+
+                            <FinishPurchaseButton />
+                            <div className="text-center mt-6">
+                                <Link href={'/'} className="text-xs text-gray-500 text-center" >Comprar outros produtos</Link>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

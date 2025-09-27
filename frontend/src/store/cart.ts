@@ -9,7 +9,7 @@ type CartState = {
     shippingDays: number;
     selectedAddressId: number | null;
     addItem: (cartItem: CartItem) => void;
-    removeItem: (productId: string | number, quantity: number) => void;
+    removeItem: (productId: string | number) => void;
     updateQuantity: (productId: string | number, quantity: number) => void;
     setShippingZipcode: (zipcode: string) => void;
     setShippingCost: (cost: number) => void;
